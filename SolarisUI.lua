@@ -27,13 +27,6 @@ local function CheckKey(tab, key)
 	end
 end
 
-local NotificationFrame = game:GetObjects("rbxassetid://6924028278")[1]
-NotificationFrame.ZIndex = 4
-NotificationFrame.Parent = NotificationHolder
-script = NotificationFrame.NotifScript
-local Notify = loadstring(NotificationFrame.NotifScript.Source)()
-script = oldScript
-
 local SolarisLib = {
     Themes = {
         Default = {
@@ -163,7 +156,7 @@ local MainUI = game:GetObjects("rbxassetid://7835727566")[1]
 print("SolarisLib Loaded!")
 local function MakeDraggable(topbarobject, object) 
     pcall(function()
-		local dragging, dragInput, mousePos, framePos = false
+		local dragging, dragInput, mousePos, framePos = true
 		topbarobject.InputBegan:Connect(function(input)
 			if input.UserInputType == Enum.UserInputType.MouseButton1 then
 				dragging = true
