@@ -1,8 +1,11 @@
--- This User Interface Library is brought to you by Solaris Software.
+-- This UI For Script Hub
 local Solaris = Instance.new("ScreenGui")
-Solaris.Name = "dosage's solaris gui"
+Solaris.Name = "Modded UI"
 Solaris.Parent = game.CoreGui
 Solaris.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+if sethiddenproperty then
+    sethiddenproperty(Solaris, "RobloxLocked", true)
+end
 
 local NotificationHolder = Instance.new("ScreenGui")
 NotificationHolder.Name = "notiHolder"
