@@ -28,7 +28,7 @@ local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
 local Mouse = LocalPlayer:GetMouse()
 local http = game:GetService("HttpService")
-local e = game:GetService("UserInputService")
+local UserInputService = game:GetService("UserInputService")
 
 local WhitelistedMouse = {Enum.UserInputType.MouseButton1, Enum.UserInputType.MouseButton2,Enum.UserInputType.MouseButton3}
 local BlacklistedKeys = {Enum.KeyCode.Unknown,Enum.KeyCode.W,Enum.KeyCode.A,Enum.KeyCode.S,Enum.KeyCode.D,Enum.KeyCode.Up,Enum.KeyCode.Left,Enum.KeyCode.Down,Enum.KeyCode.Right,Enum.KeyCode.Slash,Enum.KeyCode.Tab,Enum.KeyCode.Backspace,Enum.KeyCode.Escape}
@@ -169,33 +169,32 @@ local SolarisLib = {
 local MainUI = game:GetObjects("rbxassetid://7835727566")[1]
 print("Solaris Loaded ! [SFX VERISON]")
 local function MakeDraggable(topbarobject, object)
-    local d, s, p
+    local dragging, Pos, Offset
 
-    local function start(i)
-        d = true
-        s = i.Position
-        p = object.Position
+    local function Drag(input)
+        dragging = true
+        Pos = input.Position
+        Offset = object.Position
     end
 
-    topbarobject.InputBegan:Connect(function(i)
-        if i.UserInputType == Enum.UserInputType.MouseButton1 or i.UserInputType == Enum.UserInputType.Touch then
-            start(i)
-            i.Changed:Connect(function()
-                if i.UserInputState == Enum.UserInputState.End then
-                    d = false
+    topbarobject.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            Drag(input)
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragging = false
                 end
             end)
         end
     end)
 
-    e.InputChanged:Connect(function(i)
-        if d then
-            local delta = i.Position - s
-            object.Position = UDim2.new(p.X.Scale, p.X.Offset + delta.X, p.Y.Scale, p.Y.Offset + delta.Y)
+    UserInputService.InputChanged:Connect(function(input)
+        if dragging then
+            local delta = input.Position - Pos
+            object.Position = UDim2.new(Offset.X.Scale, Offset.X.Offset + delta.X, Offset.Y.Scale, Offset.Y.Offset + delta.Y)
         end
     end)
 end
-
 function Ripple(Object)
 	spawn(function()
 		local Circle = Instance.new("ImageLabel")
