@@ -3,17 +3,14 @@ local Solaris = Instance.new("ScreenGui")
 Solaris.Name = "UI_" .. math.random(1000, 9999)
 Solaris.Parent = game:GetService("CoreGui")
 Solaris.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-
 if sethiddenproperty then
     pcall(function() sethiddenproperty(Solaris, "RobloxLocked", true) end)
 end
-
 if syn and syn.protect_gui then
     syn.protect_gui(Solaris)
 elseif gethui then
     Solaris.Parent = gethui()
 end
-
 Solaris.AncestryChanged:Connect(function(_, p)
     if p ~= game:GetService("CoreGui") then
         Solaris.Parent = game:GetService("CoreGui")
@@ -31,6 +28,7 @@ local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
 local Mouse = LocalPlayer:GetMouse()
 local http = game:GetService("HttpService")
+local UserInputService = game:GetService("UserInputService")
 
 local WhitelistedMouse = {Enum.UserInputType.MouseButton1, Enum.UserInputType.MouseButton2,Enum.UserInputType.MouseButton3}
 local BlacklistedKeys = {Enum.KeyCode.Unknown,Enum.KeyCode.W,Enum.KeyCode.A,Enum.KeyCode.S,Enum.KeyCode.D,Enum.KeyCode.Up,Enum.KeyCode.Left,Enum.KeyCode.Down,Enum.KeyCode.Right,Enum.KeyCode.Slash,Enum.KeyCode.Tab,Enum.KeyCode.Backspace,Enum.KeyCode.Escape}
@@ -172,32 +170,51 @@ local MainUI = game:GetObjects("rbxassetid://7835727566")[1]
 print("SolarisLib Loaded!")
 local function MakeDraggable(topbarobject, object) 
     pcall(function()
-		local dragging, dragInput, mousePos, framePos = true
-		topbarobject.InputBegan:Connect(function(input)
-			if input.UserInputType == Enum.UserInputType.MouseButton1 then
-				dragging = true
-				mousePos = input.Position
-				framePos = object.Position
+        local dragging, dragInput, touchPos, framePos
 
-				input.Changed:Connect(function()
-					if input.UserInputState == Enum.UserInputState.End then
-						dragging = false
-					end
-				end)
-			end
-		end)
-		topbarobject.InputChanged:Connect(function(input)
-			if input.UserInputType == Enum.UserInputType.MouseMovement then
-				dragInput = input
-			end
-		end)
-		UserInputService.InputChanged:Connect(function(input)
-			if input == dragInput and dragging then
-				local delta = input.Position - mousePos
-				object.Position  = UDim2.new(framePos.X.Scale, framePos.X.Offset + delta.X, framePos.Y.Scale, framePos.Y.Offset + delta.Y)
-			end
-		end)
-	end)
+        topbarobject.InputBegan:Connect(function(input)
+            if input.UserInputType == Enum.UserInputType.MouseButton1 then
+                dragging = true
+                touchPos = input.Position
+                framePos = object.Position
+
+                input.Changed:Connect(function()
+                    if input.UserInputState == Enum.UserInputState.End then
+                        dragging = false
+                    end
+                end)
+            end
+        end)
+
+        topbarobject.InputChanged:Connect(function(input)
+            if input.UserInputType == Enum.UserInputType.MouseMovement then
+                dragInput = input
+            end
+        end)
+
+        topbarobject.InputBegan:Connect(function(input)
+            if input.UserInputType == Enum.UserInputType.Touch then
+                dragging = true
+                touchPos = input.Position
+                framePos = object.Position
+
+                input.Changed:Connect(function()
+                    if input.UserInputState == Enum.UserInputState.End then
+                        dragging = false
+                    end
+                end)
+            end
+        end)
+
+        UserInputService.InputChanged:Connect(function(input)
+            if dragging then
+                if input == dragInput or input.UserInputType == Enum.UserInputType.Touch then
+                    local delta = input.Position - touchPos
+                    object.Position = UDim2.new(framePos.X.Scale, framePos.X.Offset + delta.X, framePos.Y.Scale, framePos.Y.Offset + delta.Y)
+                end
+            end
+        end)
+    end)
 end
 
 
