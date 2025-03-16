@@ -32,7 +32,7 @@
 Obsidian UI Library is a modified version of LinoriaLib, designed for a modern, mobile-friendly, and customizable UI experience in Roblox scripting.
 
 This documentation covers how to use Obsidian UI Library to build powerful user interfaces with ease.
-
+![Obsidian UI Banner](https://github.com/srtx-evls/FJEKQOSIXKSPQOEIDOXKJAKA/blob/main/UI.jpg?raw=true?raw=true)
 ---
 
 ## 2. Library Initialization
