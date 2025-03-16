@@ -1,11 +1,24 @@
 -- This UI For Script Hub
 local Solaris = Instance.new("ScreenGui")
-Solaris.Name = "Modded UI"
-Solaris.Parent = game.CoreGui
+Solaris.Name = "UI_" .. math.random(1000, 9999)
+Solaris.Parent = game:GetService("CoreGui")
 Solaris.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
 if sethiddenproperty then
-    sethiddenproperty(Solaris, "RobloxLocked", true)
+    pcall(function() sethiddenproperty(Solaris, "RobloxLocked", true) end)
 end
+
+if syn and syn.protect_gui then
+    syn.protect_gui(Solaris)
+elseif gethui then
+    Solaris.Parent = gethui()
+end
+
+Solaris.AncestryChanged:Connect(function(_, p)
+    if p ~= game:GetService("CoreGui") then
+        Solaris.Parent = game:GetService("CoreGui")
+    end
+end)
 
 local NotificationHolder = Instance.new("ScreenGui")
 NotificationHolder.Name = "notiHolder"
