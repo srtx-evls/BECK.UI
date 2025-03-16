@@ -168,17 +168,16 @@ local SolarisLib = {
 
 local MainUI = game:GetObjects("rbxassetid://7835727566")[1]
 print("Solaris Loaded ! [SFX VERISON]")
-
-local function m(t, o)
+local function MakeDraggable(topbarobject, object)
     local d, s, p
 
     local function start(i)
         d = true
         s = i.Position
-        p = o.Position
+        p = object.Position
     end
 
-    t.InputBegan:Connect(function(i)
+    topbarobject.InputBegan:Connect(function(i)
         if i.UserInputType == Enum.UserInputType.MouseButton1 or i.UserInputType == Enum.UserInputType.Touch then
             start(i)
             i.Changed:Connect(function()
@@ -192,7 +191,7 @@ local function m(t, o)
     e.InputChanged:Connect(function(i)
         if d then
             local delta = i.Position - s
-            o.Position = UDim2.new(p.X.Scale, p.X.Offset + delta.X, p.Y.Scale, p.Y.Offset + delta.Y)
+            object.Position = UDim2.new(p.X.Scale, p.X.Offset + delta.X, p.Y.Scale, p.Y.Offset + delta.Y)
         end
     end)
 end
