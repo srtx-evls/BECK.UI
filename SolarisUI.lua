@@ -28,7 +28,7 @@ local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
 local Mouse = LocalPlayer:GetMouse()
 local http = game:GetService("HttpService")
-local UserInputService = game:GetService("UserInputService")
+local e = game:GetService("UserInputService")
 
 local WhitelistedMouse = {Enum.UserInputType.MouseButton1, Enum.UserInputType.MouseButton2,Enum.UserInputType.MouseButton3}
 local BlacklistedKeys = {Enum.KeyCode.Unknown,Enum.KeyCode.W,Enum.KeyCode.A,Enum.KeyCode.S,Enum.KeyCode.D,Enum.KeyCode.Up,Enum.KeyCode.Left,Enum.KeyCode.Down,Enum.KeyCode.Right,Enum.KeyCode.Slash,Enum.KeyCode.Tab,Enum.KeyCode.Backspace,Enum.KeyCode.Escape}
@@ -167,56 +167,35 @@ local SolarisLib = {
 
 
 local MainUI = game:GetObjects("rbxassetid://7835727566")[1]
-print("SolarisLib Loaded!")
-local function MakeDraggable(topbarobject, object) 
-    pcall(function()
-        local dragging, dragInput, touchPos, framePos
+print("Solaris Loaded ! [SFX VERISON]")
 
-        topbarobject.InputBegan:Connect(function(input)
-            if input.UserInputType == Enum.UserInputType.MouseButton1 then
-                dragging = true
-                touchPos = input.Position
-                framePos = object.Position
+local function m(t, o)
+    local d, s, p
 
-                input.Changed:Connect(function()
-                    if input.UserInputState == Enum.UserInputState.End then
-                        dragging = false
-                    end
-                end)
-            end
-        end)
+    local function start(i)
+        d = true
+        s = i.Position
+        p = o.Position
+    end
 
-        topbarobject.InputChanged:Connect(function(input)
-            if input.UserInputType == Enum.UserInputType.MouseMovement then
-                dragInput = input
-            end
-        end)
-
-        topbarobject.InputBegan:Connect(function(input)
-            if input.UserInputType == Enum.UserInputType.Touch then
-                dragging = true
-                touchPos = input.Position
-                framePos = object.Position
-
-                input.Changed:Connect(function()
-                    if input.UserInputState == Enum.UserInputState.End then
-                        dragging = false
-                    end
-                end)
-            end
-        end)
-
-        UserInputService.InputChanged:Connect(function(input)
-            if dragging then
-                if input == dragInput or input.UserInputType == Enum.UserInputType.Touch then
-                    local delta = input.Position - touchPos
-                    object.Position = UDim2.new(framePos.X.Scale, framePos.X.Offset + delta.X, framePos.Y.Scale, framePos.Y.Offset + delta.Y)
+    t.InputBegan:Connect(function(i)
+        if i.UserInputType == Enum.UserInputType.MouseButton1 or i.UserInputType == Enum.UserInputType.Touch then
+            start(i)
+            i.Changed:Connect(function()
+                if i.UserInputState == Enum.UserInputState.End then
+                    d = false
                 end
-            end
-        end)
+            end)
+        end
+    end)
+
+    e.InputChanged:Connect(function(i)
+        if d then
+            local delta = i.Position - s
+            o.Position = UDim2.new(p.X.Scale, p.X.Offset + delta.X, p.Y.Scale, p.Y.Offset + delta.Y)
+        end
     end)
 end
-
 
 function Ripple(Object)
 	spawn(function()
