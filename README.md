@@ -210,7 +210,7 @@ LeftGroupBox:AddDropdown("WeaponSelect", {
 ```
 ---
 
-### ColorPicker 6.8 
+### 6.8 ColorPicker  
 Allows users pick a color
 
 ```lua
