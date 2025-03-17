@@ -7,7 +7,7 @@
 1. Introduction
 2. Library Initialization
 3. Library Configuration
-- Variables
+   - Variables
 5. Creating a Window
 6. Tabs & Groupboxes
 7. UI Elements
