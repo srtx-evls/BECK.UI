@@ -56,6 +56,14 @@ Library.ShowToggleFrameInKeybinds = true -- Shows toggle frame inside keybinds U
 ```
 
 ---
+## 3.1 Variables 
+Options: Configures settings / Toggles: Controls features (on/off).
+```lua
+local Options = Library.Options
+local Toggles = Library.Toggles
+```
+
+---
 
 ## 4. Creating a Window
 The Window is the main UI container.
