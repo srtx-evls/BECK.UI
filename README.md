@@ -7,9 +7,10 @@
 1. Introduction
 2. Library Initialization
 3. Library Configuration
-4. Creating a Window
-5. Tabs & Groupboxes
-6. UI Elements
+- Variables
+5. Creating a Window
+6. Tabs & Groupboxes
+7. UI Elements
    - Toggles
    - Checkboxes
    - Buttons
@@ -19,12 +20,12 @@
    - Dropdowns
    - Color Pickers
    - Keybinds
-7. Notifications
-8. Save & Load System
-9. Themes & DPI Settings
-10. Event Handling & Best Practices
-11. Unloading the Library
-12. Credits
+8. Notifications
+9. Save & Load System
+10. Themes & DPI Settings
+11. Event Handling & Best Practices
+12. Unloading the Library
+13. Credits
 
 ---
 
@@ -207,6 +208,22 @@ LeftGroupBox:AddDropdown("WeaponSelect", {
 	end
 })
 ```
+---
+
+### ColorPicker 6.8 
+Allows users pick a color
+
+```lua
+LeftGroupBox:AddColorPicker("ColorPicker1", {
+    Default = Color3.new(1, 0, 0), -- Default color (Red)
+    Title = "Some Color1",         -- Color picker title
+    Transparency = 0,              -- Transparency value (0 is fully opaque)
+    Callback = function(Value)
+        print("[cb] Color changed!", Value)
+    end
+})
+```
+
 
 ---
 
